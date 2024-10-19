@@ -43,8 +43,13 @@ class MaterialLineEdit(QLineEdit):
         urls = event.mimeData().urls()
         if urls and urls[0].isLocalFile():
             file_path = urls[0].toLocalFile()
-            if os.path.isdir(file_path) or file_path.endswith(('.mp4', '.mov', '.3gp')):
-                self.setText(file_path)
+            # 检查是否为有效的视频文件或目录
+            if os.path.isdir(file_path):
+                self.setText(file_path)  # 处理文件夹
+                event.acceptProposedAction()
+            elif os.path.isfile(file_path) and file_path.lower().endswith(
+                    ('.mp4', '.mov', '.3gp', '.avi', '.mkv', '.flv', '.wmv', '.mpeg', '.mpg')):
+                self.setText(file_path)  # 处理有效的视频文件
                 event.acceptProposedAction()
 
 class SplitSignals(QObject):
