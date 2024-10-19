@@ -157,38 +157,6 @@ class SplitTask(QRunnable):
     def process_clip(self, video_path, start_time, end_time, output_video_path):
         self.extract_subclip(video_path, start_time, end_time, output_video_path)
 
-    # # 这个方案打包出来之后，运行分割，会快速闪烁命令行
-    # def extract_subclip(self, video_path, start_time, end_time, output_path):
-    #     """提取子剪辑"""
-    #     video_codec = 'libx264'
-    #     preset = 'ultrafast'
-    #
-    #     command = [
-    #         'ffmpeg', '-y', '-loglevel', 'error', '-i', video_path,
-    #         '-ss', str(start_time), '-to', str(end_time),
-    #         '-c:v', video_codec, '-preset', preset, '-crf', '23',
-    #         '-c:a', 'aac', '-b:a', '128k',
-    #         output_path
-    #     ]
-    #
-    #     # 在 Windows 系统中隐藏窗口
-    #     if platform.system() == "Windows":
-    #         startupinfo = subprocess.STARTUPINFO()
-    #         startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-    #         startupinfo.wShowWindow = subprocess.SW_HIDE  # 隐藏命令行窗口
-    #
-    #         process = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-    #                                    startupinfo=startupinfo)
-    #     else:
-    #         process = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    #
-    #     stdout, stderr = process.communicate()
-    #
-    #     if process.returncode != 0:
-    #         error_message = stderr.decode('utf-8').strip()
-    #         print(f"Failed to extract subclip: {error_message}")
-    #         raise Exception(f"FFmpeg 错误: {error_message}")
-
     def extract_subclip(self, video_path, start_time, end_time, output_path):
         """提取子剪辑"""
         video_codec = 'libx264'
